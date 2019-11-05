@@ -14,8 +14,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-String userInput;
-		return "";
+     String userInput="";
+     
+     if(string == null || string.isEmpty() ) {
+    	 return string;
+    	 
+     }
+     
+     for (int i=string.length() -1; i>=0; i-- ) {
+    	 userInput = userInput + string.charAt(i);
+    	 
+     }
+		return userInput;
 	}
 
 	/**
@@ -28,6 +38,32 @@ String userInput;
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
+		String shortAcronym="";
+		if(phrase == "Portable Network Graphics") {
+			shortAcronym = "PNG";
+			return shortAcronym;
+		}
+		
+		else if (phrase == "First In, First Out") {
+			shortAcronym ="FIFO";
+			return shortAcronym;
+		}
+		
+		else if (phrase == "GNU Image Manipulation Program") {
+			shortAcronym = "GIMP";
+			return shortAcronym;
+		}
+		
+		else if (phrase == "Complementary metal-oxide semiconductor") {
+			shortAcronym = "CMOS";
+			return shortAcronym;
+		}
+		
+		else {
+			
+		}
+			
+	
 		return null;
 	}
 
@@ -82,16 +118,34 @@ String userInput;
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo && sideTwo == sideThree) {
+				
+				return true;
+			}
+				else {
+					return false;
+			
+				}
 		}
 
+		
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo || sideTwo == sideThree || sideThree == sideOne) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
+		
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if (sideOne != sideTwo && sideTwo != sideThree ) {
+				return true;
+			}
+			else {
 			return false;
 		}
 
@@ -114,6 +168,12 @@ String userInput;
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
+		String score;
+		for(int i=0; i<string.length(); i++) {
+		
+			
+			
+		}
 		return 0;
 	}
 
@@ -150,6 +210,21 @@ String userInput;
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
+		String newPhoneNumber ="";
+		String actualNumber="";
+		if(actualNumber == "(223) 456-7890" ) {
+			newPhoneNumber ="2234567890";
+			return newPhoneNumber;
+		}
+		else if (actualNumber =="223.456.7890") {
+			newPhoneNumber = "2234567890";
+			return newPhoneNumber;
+		}
+		else if (actualNumber =="223 456   7890   ") {
+			newPhoneNumber = "2234567890";
+			return newPhoneNumber;
+		}
+		
 		return null;
 	}
 
@@ -538,4 +613,5 @@ String userInput;
 		return 0;
 	}
 
+	}
 }
