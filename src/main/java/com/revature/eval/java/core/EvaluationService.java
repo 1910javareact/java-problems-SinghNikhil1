@@ -162,19 +162,58 @@ public class EvaluationService {
 	 * point for E And to total:
 	 * 
 	 * 3 + 2*1 + 2*3 + 2 + 1 = 3 + 2 + 6 + 3 = 5 + 9 = 14
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		String score;
-		for(int i=0; i<string.length(); i++) {
+	int score =0;
+		
+	for (int i = 0; i < string.length(); i++ ) {
+		
+		char  letter= string.toUpperCase().charAt(i);
+		switch (letter) {
+		case 'A' :
+		case 'E' :
+		case 'I' :
+		case 'O' :
+		case 'u' :
+		case 'l' :
+		case 'N' :
+		case 'R' :
+		case 'S' :
+		case 'T' : score+= 1;
+		break;
+		case 'D' :
+		case 'G' : score+=2;
+		break;
+		case 'B' :
+		case 'C' :
+		case 'M' :
+		case 'P' : score+=3;// score=scre+ 3;
+		break;
+		case 'F' :
+		case 'H' :
+		case 'V' :
+		case 'W' :
+		case 'Y' : score+= 4;
+		break;
+		case 'K' : score+=5;
+		break;
+		case 'J' :
+		case 'X' : score+= 8;
+		break;
+		case 'Q' :
+		case 'Z' : score+=10;
+		break;
+		}
+	
 		
 			
 			
 		}
-		return 0;
+		return score;
 	}
 
 	/**
@@ -339,6 +378,12 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
+		String number="";
+		int anotherNumber;
+//		if ()s
+		
+		
+	
 		return false;
 	}
 
