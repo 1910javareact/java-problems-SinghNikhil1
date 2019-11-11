@@ -1,6 +1,8 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,13 +124,13 @@ public class EvaluationService {
 				
 				return true;
 			}
-				else {
-					return false;
+			else {
+				return false;
 			
-				}
+			}
 		}
 
-		
+	
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
 			if (sideOne == sideTwo || sideTwo == sideThree || sideThree == sideOne) {
@@ -149,6 +151,7 @@ public class EvaluationService {
 			return false;
 		}
 
+	}
 	}
 
 	/**
@@ -178,7 +181,7 @@ public class EvaluationService {
 		case 'E' :
 		case 'I' :
 		case 'O' :
-		case 'u' :
+		case 'U' :
 		case 'l' :
 		case 'N' :
 		case 'R' :
@@ -249,22 +252,19 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		String newPhoneNumber ="";
-		String actualNumber="";
-		if(actualNumber == "(223) 456-7890" ) {
-			newPhoneNumber ="2234567890";
-			return newPhoneNumber;
-		}
-		else if (actualNumber =="223.456.7890") {
-			newPhoneNumber = "2234567890";
-			return newPhoneNumber;
-		}
-		else if (actualNumber =="223 456   7890   ") {
-			newPhoneNumber = "2234567890";
-			return newPhoneNumber;
+		String cleanNumber = "";
+		for (int i=0 ;i < string.length(); i++) {
+			char temp = string.charAt(i);
+			int temp2 = Character.getNumericValue(temp) ;
+			if (temp2>-1) {
+				cleanNumber += temp;
+			}
+			if (cleanNumber.length()>10) {
+				cleanNumber = cleanNumber.substring(1);
+			}
 		}
 		
-		return null;
+		return cleanNumber;
 	}
 
 	/**
@@ -278,7 +278,33 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+Map<String, Integer> words = new HashMap<>();
+		
+		
+		string = string.replaceAll(",", " ");
+		string = string.replaceAll("\n", " ");
+		string = string.replaceAll(" +", " ");
+		
+		int counter = 0;
+		
+		
+		String[] wordsArray = string.split(" ");
+		
+		
+		for(String e : wordsArray) {
+			
+			if(words.containsKey(e)) {
+				
+				counter = words.get(e) + 1;
+				words.put(e, counter);
+			}
+			else if(!words.containsKey(e)) {
+				words.put(e, 1);
+			}
+		
+	}
+		return words;
 	}
 
 	/**
@@ -316,28 +342,46 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
-		private List<T> sortedList;
+		static class BinarySearch<T> {
+			private List<T> sortedList;
 
-		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			public int binarySearch(int right, int left, T element) {
+				
+				
+				int mid = left + ((right - left) / 2);
+				
+				
+				if (sortedList.get(mid).equals(element)) {
+					return mid;
+				}
+				
+				if ((int)sortedList.get(mid) < (int)element) {
+					return binarySearch(right, mid + 1, element);
+				}
+				else {
+					return binarySearch(mid - 1, left, element);
+				}
+			}
+			
+			public int indexOf(T t) {
+				
+				return this.binarySearch(sortedList.size() - 1, 0, t);
+			}
+
+			public BinarySearch(List<T> sortedList) {
+				super();
+				this.sortedList = sortedList;
+			}
+
+			public List<T> getSortedList() {
+				return sortedList;
+			}
+
+			public void setSortedList(List<T> sortedList) {
+				this.sortedList = sortedList;
+			}
+
 		}
-
-		public BinarySearch(List<T> sortedList) {
-			super();
-			this.sortedList = sortedList;
-		}
-
-		public List<T> getSortedList() {
-			return sortedList;
-		}
-
-		public void setSortedList(List<T> sortedList) {
-			this.sortedList = sortedList;
-		}
-
-	}
 
 	/**
 	 * 8. Implement a program that translates from English to Pig Latin.
@@ -358,7 +402,39 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		String s = null;
+		if((string.charAt(0) == 'a') || (string.charAt(0) == 'e') || (string.charAt(0) =='i') || (string.charAt(0) == 'o') || (string.charAt(0) == 'u')) {
+			s= string+ "ay";
+		}else {
+			if((string.charAt(1) =='a') || (string.charAt(1) == 'e') || (string.charAt(1) == 'i') || (string.charAt(1) == 'o') || (string.charAt(1) == 'u')) {
+				
+				char firstLetter = string.charAt(0);
+				s = string.substring(1);
+				s = s + firstLetter +"ay";
+			}else {
+				if((string.charAt(2) =='a') || (string.charAt(2) == 'e') || (string.charAt(2) == 'i') || (string.charAt(2) == 'o') || (string.charAt(2) == 'u')) {
+					char firstLetter = string.charAt(0);
+					s = string.substring(1);
+					s = s + firstLetter;
+					firstLetter = s.charAt(0);
+					s = s.substring(1);
+					s = s + firstLetter + "ay";
+				} else {
+					char firstLetter = string.charAt(0);
+					s = string.substring(1);
+					s = s + firstLetter;
+					firstLetter = s.charAt(0);
+					s = string.substring(1);
+					s = s + firstLetter;
+					firstLetter = string.charAt(0);
+					s = string.substring(1);
+					s = s + firstLetter + "ay";
+					
+				}
+			}
+		}
+		return s;
 	}
 
 	/**
@@ -366,6 +442,7 @@ public class EvaluationService {
 	 * raised to the power of the number of digits.
 	 * 
 	 * For example:
+	 * 
 	 * 
 	 * 9 is an Armstrong number, because 9 = 9^1 = 9 10 is not an Armstrong number,
 	 * because 10 != 1^2 + 0^2 = 2 153 is an Armstrong number, because: 153 = 1^3 +
@@ -378,12 +455,17 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
-		String number="";
-		int anotherNumber;
-//		if ()s
-		
-		
-	
+		int number = input, orignalNumber = input, remainder, result = 0;
+		while (orignalNumber != 0)
+		{
+			remainder = orignalNumber % 10;
+			result += Math.pow(remainder, 3);
+			orignalNumber /= 10;
+		}
+		if ( result == number) {
+			return true;
+		}else
+			
 		return false;
 	}
 
@@ -399,7 +481,19 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primeFactors = new ArrayList<>();
+		
+		while (l != 1) {
+			
+			long i =2;
+		
+			while(l % i != 0) {
+				i = i + 1;
+			}
+			l =l/i;
+			primeFactors.add(i);
+		}
+		return primeFactors;
 	}
 
 	/**
@@ -457,7 +551,29 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		if(i ==0) {
+			throw new IllegalArgumentException();
+		}
+		
+		int checkPrime = 0;
+		int number = 1;
+		int counter = 0;
+		
+		
+		while (counter < i) {
+			number++;
+			for(checkPrime = 2; checkPrime <= number; checkPrime++) {
+
+				if(number % checkPrime == 0) {
+					break;
+				}
+			}
+		
+			if(checkPrime == number) {
+				counter++;
+			}
+		}
+		return number;
 	}
 
 	/**
@@ -533,6 +649,32 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
+		String[] isbnNumbers = string.split("");
+		int numberCheck = 0;
+		
+		int tracker = 0;
+		
+
+		for(int i = 0; i < isbnNumbers.length; i++) {
+			if(isbnNumbers[i].equals("0") || isbnNumbers[i].equals("1") || isbnNumbers[i].equals("2") ||
+				isbnNumbers[i].equals("3") || isbnNumbers[i].equals("4") || isbnNumbers[i].equals("5") ||
+				isbnNumbers[i].equals("6") || isbnNumbers[i].equals("7") || isbnNumbers[i].equals("8") ||
+				isbnNumbers[i].equals("9")) {
+					
+					numberCheck += (Integer.valueOf(isbnNumbers[i])) * (10 - tracker);
+			}
+			
+			else if(isbnNumbers[i].equals("-")) {
+				tracker--;
+			}
+			else if(isbnNumbers.equals("X") && (i + 1) == isbnNumbers.length){
+				numberCheck += 10;
+			}
+			else {
+				return false;
+			}
+			tracker++;
+		}
 		return false;
 	}
 
@@ -551,7 +693,23 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		String[] alphabet = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+		int count = 0;
+		
+	
+		for(int i = 0; i < alphabet.length; i++) {
+			if(string.contains(alphabet[i])) {
+				count++;
+			}
+		}
+		
+		
+		if(count == 26) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -582,7 +740,16 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int sumNum =0;
+		for(int j = 1; j < 1; j++ ) {
+			for(int k = 0;k < set.length; k++) {
+				if (j % set[k] == 0) {
+					sumNum += j;
+					k =set.length;
+				}
+			}
+		}
+		return sumNum;
 	}
 
 	/**
@@ -623,8 +790,25 @@ public class EvaluationService {
 	 */
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+int sum = 0;
+		
+		
+		for(int i = 1; i < string.length(); i += 2) {
+			sum += 2 * string.charAt(i);
+		}
+		
+		
+		if (sum % 10 == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
+		
+	
+
 
 	/**
 	 * 20. Parse and evaluate simple math word problems returning the answer as an
@@ -655,8 +839,46 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int firstNumber = 0;
+		int secondNumber = 0;
+		int output = 0;
+		
+		String temp = "";
+		
+	
+		String[] input = string.split(" ");
+		
+		
+		firstNumber = Integer.valueOf(input[2]);
+		
+		
+		if (input.length == 5) {
+			temp += input[4].replace("?", "");
+			secondNumber = Integer.valueOf(temp);
+		}
+		else if (input.length == 6	) {
+			temp += input[5].replace("?", "");
+			secondNumber = Integer.valueOf(temp);
+		}
+		
+		
+		if (input[3].equals("plus")) {
+			output = firstNumber + secondNumber;
+		}
+
+		else if (input[3].equals("minus")) {
+			output = firstNumber - secondNumber;
+		}
+		
+		else if (input[3].equals("multiplied")) {
+			output = firstNumber * secondNumber;
+		}
+		
+		else if (input[3].equals("divided")) {
+			output = firstNumber / secondNumber;
+		}
+		
+		return output;
 	}
 
-	}
 }
